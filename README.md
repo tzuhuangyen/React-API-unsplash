@@ -7,6 +7,9 @@ practice useEffect, useStatus,useRef
 - 防止過度觸發API
 - 如沒有在讀取中並且視窗滾動到某個位置才觸發API
 - 不會覆蓋之前資料
+- 可以查看由unsplash api 傳來的剩餘次數
+- 讀取圈圈效果
+- 取得單張照片
 
 ## Features
 
