@@ -6,7 +6,8 @@ It includes features like infinite scrolling to load more photos as the user scr
 practice useEffect, useStatus,useRef
 - 防止過度觸發API
 - 如沒有在讀取中並且視窗滾動到某個位置才觸發API
-- 不會覆蓋之前資料
+- 往下滾動後 會繼續觸發並傳回新資料 不會覆蓋之前資料
+- 重新搜尋資料後 只顯示新資料
 - 可以查看由unsplash api 傳來的剩餘次數
 - 讀取圈圈效果
 - 取得單張照片
