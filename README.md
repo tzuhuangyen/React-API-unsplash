@@ -10,7 +10,7 @@ practice useEffect, useStatus,useRef
 - 重新搜尋資料後 只顯示新資料
 - 可以查看由unsplash api 傳來的剩餘次數
 - 讀取圈圈效果
-- 取得單張照片
+- 取得單張照片 並顯示在畫面上
 
 ## Features
 
