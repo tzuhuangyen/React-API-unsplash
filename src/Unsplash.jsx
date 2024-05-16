@@ -1,13 +1,13 @@
-import { useState, useEffect, useRef } from "react";
-import "./unsplash.css";
-const api = "https://api.unsplash.com/search/photos/";
-const accessKey = "Lc0adYv-qrIVVdScrD0bIE72CcKdI6jU4wUErrR2Vqo";
+import { useState, useEffect, useRef } from 'react';
+import './unsplash.css';
+const api = 'https://api.unsplash.com/search/photos/';
+const accessKey = 'Lc0adYv-qrIVVdScrD0bIE72CcKdI6jU4wUErrR2Vqo';
 //loading component
 const Loading = ({ isLoading }) => {
   return (
-    <div className="loading" style={{ display: isLoading ? "flex" : "none" }}>
-      <div className="spinner-border" role="status">
-        <span className="visually-hidden">Loading...</span>
+    <div className='loading' style={{ display: isLoading ? 'flex' : 'none' }}>
+      <div className='spinner-border' role='status'>
+        <span className='visually-hidden'>Loading...</span>
       </div>
     </div>
   );
@@ -17,11 +17,11 @@ const SearchBox = ({ onSearchHandler, filterString }) => {
   return (
     <>
       <div>
-        <label htmlFor="filter">搜尋</label>
+        <label htmlFor='filter'>搜尋</label>
         <input
-          type="text"
-          id="filter"
-          className="form-control"
+          type='text'
+          id='filter'
+          className='form-control'
           defaultValue={filterString}
           onKeyUp={onSearchHandler}
         />
@@ -29,12 +29,12 @@ const SearchBox = ({ onSearchHandler, filterString }) => {
     </>
   );
 };
-//card conponent
+//card component
 const Card = ({ item, getSinglePhoto }) => {
   return (
     <a
-      href="#"
-      className="card"
+      href='#'
+      className='card'
       onClick={(e) => {
         e.preventDefault();
         getSinglePhoto(item.id);
@@ -42,13 +42,13 @@ const Card = ({ item, getSinglePhoto }) => {
     >
       <img
         src={item.urls.regular}
-        className="card-img-top img-cover"
-        height="300"
-        width="100"
-        alt="..."
+        className='card-img-top img-cover'
+        height='300'
+        width='100'
+        alt='...'
       />
-      <div className="card-body">
-        <h5 className="card-title">title</h5>
+      <div className='card-body'>
+        <h5 className='card-title'>title</h5>
       </div>
     </a>
   );
@@ -57,7 +57,7 @@ const Card = ({ item, getSinglePhoto }) => {
 //unsplash display components
 const Unsplash = () => {
   //search
-  const [filterString, setFilterString] = useState("snow");
+  const [filterString, setFilterString] = useState('cat');
   //get api data
   const [jsonData, setJsonData] = useState([]);
   //loading
@@ -71,17 +71,17 @@ const Unsplash = () => {
   //點擊image後重新觸發傳回照片
   const modalRef = useRef(null);
   const myModal = useRef(null);
-  const [photoUrl, setPhotoUrl] = useState("");
+  const [photoUrl, setPhotoUrl] = useState('');
   //handle search,  after "Enter",then save the input of value
   const onSearchHandler = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       setFilterString(e.target.value);
     }
   };
-  //get singel photo function
+  //get single photo function
   const getSinglePhoto = (id) => {
     (async () => {
-      const api = "https://api.unsplash.com/photos/";
+      const api = 'https://api.unsplash.com/photos/';
       const result = await axios(`${api}${id}?client_id=${accessKey}`);
       setPhotoUrl(result.data.urls.regular);
       console.log(result, photoUrl);
@@ -94,21 +94,21 @@ const Unsplash = () => {
     try {
       isLoadingRef.current = true;
       setIsLoading(true);
-      //only download 1page everytime "&page=${page}""
+      //only download 1page every time "&page=${page}""
       const result = await axios.get(
         `${api}?client_id=${accessKey}&query=${filterString}&page=${page}`
       );
       console.log(result);
       //這樣才不會覆蓋前一頁資料
       setJsonData((preData) => {
-        console.log("更新資料觸發");
+        console.log('更新資料觸發');
         //如果是新輸入的搜尋資料
         if (isNew) {
           return [...result.data.results];
         }
         return [...preData, ...result.data.results];
       });
-      setRemaining(result.headers["x-ratelimit-remaining"]);
+      setRemaining(result.headers['x-ratelimit-remaining']);
       currentPage.current = page; //確認每次回到的都是第一頁
       setTimeout(() => {
         isLoadingRef.current = false;
@@ -139,21 +139,21 @@ const Unsplash = () => {
     // This code adds an event listener to the window object to track scroll events.
     // When the scroll event occurs, it triggers the scrollEvent function.
     // The event listener is removed when the component unmounts or when the filterString value changes.
-    window.addEventListener("scroll", scrollEvent);
-    return () => window.removeEventListener("scroll", scrollEvent);
+    window.addEventListener('scroll', scrollEvent);
+    return () => window.removeEventListener('scroll', scrollEvent);
   }, [filterString]);
 
   //loading useEffect
   useEffect(() => {
-    const body = document.querySelector("body");
+    const body = document.querySelector('body');
     if (isLoading) {
-      body.style.overflow = "hidden";
+      body.style.overflow = 'hidden';
     } else {
-      body.style.overflow = "auto";
+      body.style.overflow = 'auto';
     }
   }, [isLoading]);
 
-  //for trigger to reloading inage
+  //for trigger to reloading image
   useEffect(() => {
     myModal.current = new bootstrap.Modal(modalRef.current);
     // myModal.current.show();
@@ -169,14 +169,14 @@ const Unsplash = () => {
       />
       <p>剩餘請求次數：{remaining}</p>
 
-      <div className="row row-cols-2 g-3" ref={listRef}>
+      <div className='row row-cols-2 g-3' ref={listRef}>
         {jsonData.map((item) => {
           if (!item.id) {
-            console.warn("Item missing id:", item);
+            console.warn('Item missing id:', item);
             return null; // 或者使用默認值
           }
           return (
-            <div className="col-12 col-md-6 col-lg-4" key={item.id}>
+            <div className='col-12 col-md-6 col-lg-4' key={item.id}>
               <Card item={item} getSinglePhoto={getSinglePhoto} />
             </div>
           );
@@ -184,18 +184,18 @@ const Unsplash = () => {
       </div>
       {/* <!-- Button trigger modal --> */}
       <button
-        type="button"
-        className="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        type='button'
+        className='btn btn-primary'
+        data-bs-toggle='modal'
+        data-bs-target='#exampleModal'
       >
         Launch demo modal
       </button>
 
       {/* Modal */}
-      <div className="modal fade" tabIndex="-1" ref={modalRef}>
-        <div className="modal-dialog">
-          <img src={photoUrl} alt="" width="100%" />
+      <div className='modal fade' tabIndex='-1' ref={modalRef}>
+        <div className='modal-dialog'>
+          <img src={photoUrl} alt='' width='100%' />
         </div>
       </div>
     </>
